@@ -14,14 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/landingpage', function () {
     return view('landingpage');
 });
 
+Route::get('/profile', function () {
+    return view('pages.profile');
+})->name('profile');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard');
-})->name('dashboard');
+Route::get('/information', function () {
+    return view('pages.information');
+})->name('Information');
+
+Route::get('/procedure', function () {
+    return view('pages.procedure');
+})->name('Procedure');
+
+Route::get('/apd', function () {
+    return view('pages.apd');
+})->name('Apd');

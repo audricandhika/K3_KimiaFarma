@@ -1,4 +1,3 @@
-{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -9,11 +8,11 @@
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen">
-        @include('layouts.navigation')  <!-- Navbar Breeze tetap dipakai -->
+        @include('layouts.navigation')  
 
         <!-- Page Content -->
         <main>
-            @yield('content')  <!-- Ini yang bikin content dashboard muncul -->
+            @yield('content')  
         </main>
     </div>
 </body>
