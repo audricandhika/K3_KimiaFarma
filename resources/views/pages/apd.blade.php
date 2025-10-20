@@ -18,9 +18,9 @@
             <table class="min-w-full divide-y divide-gray-200 bg-white shadow rounded-lg">
                 <thead class="bg-gray-50 sticky top-0 z-10">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">Jenis APD</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">Fungsi Utama</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-1/3">Penerapan di Kimia Farma</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider w-1/3">Jenis APD</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider w-1/3">Fungsi Utama</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider w-1/3">Penerapan di Kimia Farma</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
