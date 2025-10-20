@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('profile') }}">
-                        {{-- <img src="{{ asset('images/logo-kimia-farma.png') }}" alt="Kimia Farma Logo" class="block h-9 w-auto"> --}}
+                        <img src="{{ asset('img/kf-logo.png') }}" alt="Kimia Farma Logo" class="block h-9 w-auto">
                     </a>
                 </div>
 
