@@ -23,7 +23,7 @@
 
     /* Hero Section */
     .hero {
-      background: url('https://images.unsplash.com/photo-1603398938378-d482a21917cc?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      background: url('../img/hero.jpg') center/cover no-repeat;
       color: white;
       height: 90vh;
       display: flex;
@@ -50,7 +50,7 @@
 
     .hero h1 {
       font-size: 3rem;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .section-title {
@@ -64,8 +64,122 @@
       background: #003366;
       color: white;
       text-align: center;
+      font-style: italic;
+      font-weight: 100;
       padding: 20px 0;
     }
+
+    .policy-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  background-color: #fff;
+  color: #000;
+}
+
+.policy-card .card-body {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+/* Overlay gelap agar teks tetap terbaca */
+.policy-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 1;
+  transition: background 0.5s ease;
+}
+
+/* Hover umum */
+.policy-card:hover::before {
+  background: rgba(0, 0, 0, 0.4);
+}
+.policy-card:hover .card-body {
+  color: #fff;
+}
+
+/* Efek background berbeda untuk setiap card */
+.card-safety:hover {
+  background: url('{{ asset("../icon/safety.png") }}') center/cover no-repeat;
+}
+
+.card-health:hover {
+  background: url('{{ asset("../icon/healthy.png") }}') center/cover no-repeat;
+}
+
+.card-apd:hover {
+  background: url('{{ asset("../icon/apd.png") }}') center/cover no-repeat;
+}
+
+.card-training:hover {
+  background: url('{{ asset("../icon/training.png") }}') center/cover no-repeat;
+}
+
+/* Styling dasar untuk card tim */
+.team-card {
+  position: relative; /* Penting untuk positioning layer */
+  overflow: hidden; /* Agar layer tidak keluar dari card */
+  transition: transform 0.3s ease; /* Opsional: efek lift card saat hover */
+}
+
+.team-card:hover {
+  transform: translateY(-5px); /* Card naik sedikit saat hover */
+}
+
+.team-card .card-img-top {
+  height: 250px; /* Sesuaikan tinggi foto utama agar konsisten */
+  object-fit: cover; /* Agar foto pas tanpa distorsi */
+}
+
+/* Layer yang slide-up */
+.slide-up-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  padding: 20px;
+  text-align: center; 
+  transform: translateY(100%); /* Awal: tersembunyi di bawah */
+  transition: transform 0.5s ease-in-out; /* Animasi smooth */
+  height: 100%; /* Layer setinggi card img */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Teks di bawah layer */
+}
+
+.team-card:hover .slide-up-layer {
+  transform: translateY(0); /* Muncul ke atas saat hover */
+}
+
+/* Styling untuk foto duplikat di layer */
+.slide-up-layer .overlay-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 100%; /* Rendah agar tidak dominan, bisa diubah ke 0 untuk hilangkan */
+}
+
+/* Styling teks di layer */
+.slide-up-layer h5 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.slide-up-layer p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
   </style>
 </head>
 
@@ -73,17 +187,18 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">K3 Kimia Farma</a>
+      <a class="navbar-brand fw-bold" href="#">
+        <img src="{{ asset('../img/logo.png') }}" alt="Logo" width="130" height="50" class="me-2">
+      </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#about">Landasan Hukum</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
           <li class="nav-item"><a class="nav-link" href="#policy">Kebijakan</a></li>
           <li class="nav-item"><a class="nav-link" href="#emergency">Prosedur Darurat</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('profile') }}">Selengkapnya</a></li>
         </ul>
       </div>
     </div>
@@ -93,7 +208,7 @@
   <section class="hero">
     <h1>Selamat Datang di Sistem Informasi K3</h1>
     <p>PT Kimia Farma Tbk - Komitmen Kami terhadap Keselamatan dan Kesehatan Kerja</p>
-    <a href="#about" class="btn btn-light mt-3">Pelajari Lebih Lanjut</a>
+    <a href="{{ route('profile') }}" class="btn btn-light mt-3">Pelajari Lebih Lanjut</a>
   </section>
 
   <!-- Tentang K3 -->
@@ -110,45 +225,51 @@
   </section>
 
   <!-- Kebijakan K3 -->
-  <section id="policy" class="bg-light py-5">
-    <div class="container">
-      <h2 class="section-title">Kebijakan K3</h2>
-      <div class="row text-center">
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-primary">Keselamatan</h5>
-              <p>Mengutamakan keselamatan kerja di setiap proses produksi dan operasional.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-primary">Kesehatan</h5>
-              <p>Menjamin kesehatan seluruh karyawan melalui pemeriksaan rutin dan lingkungan sehat.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-primary">APD Lengkap</h5>
-              <p>Menyediakan alat pelindung diri (APD) sesuai risiko pekerjaan dan memastikan penggunaannya.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card shadow-sm border-0 h-100">
-            <div class="card-body">
-              <h5 class="fw-bold text-primary">Pelatihan</h5>
-              <p>Memberikan pelatihan K3 secara berkala kepada seluruh karyawan untuk meningkatkan kesadaran dan tanggung jawab.</p>
-            </div>
+<section id="policy" class="bg-light py-5">
+  <div class="container">
+    <h2 class="section-title text-center mb-5">Kebijakan K3</h2>
+    <div class="row text-center">
+      
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card policy-card card-safety shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="fw-bold text-primary">Keselamatan</h5>
+            <p>Mengutamakan keselamatan kerja di setiap proses produksi dan operasional.</p>
           </div>
         </div>
       </div>
+
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card policy-card card-health shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="fw-bold text-primary">Kesehatan</h5>
+            <p>Menjamin kesehatan seluruh karyawan melalui pemeriksaan rutin dan lingkungan sehat.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card policy-card card-apd shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="fw-bold text-primary">APD Lengkap</h5>
+            <p>Menyediakan alat pelindung diri (APD) sesuai risiko pekerjaan dan memastikan penggunaannya.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card policy-card card-training shadow-sm border-0 h-100">
+          <div class="card-body">
+            <h5 class="fw-bold text-primary">Pelatihan</h5>
+            <p>Memberikan pelatihan K3 secara berkala kepada seluruh karyawan untuk meningkatkan kesadaran dan tanggung jawab.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- Prosedur Darurat -->
   <section id="emergency" class="container py-5">
@@ -164,18 +285,61 @@
     </div>
   </section>
 
-  <!-- Kontak -->
-  <section id="contact" class="bg-light py-5">
-    <div class="container text-center">
-      <h2 class="section-title">Kontak Kami</h2>
-      <p>Hubungi kami untuk informasi lebih lanjut mengenai implementasi K3 di lingkungan Kimia Farma.</p>
-      <ul class="list-unstyled">
-        <li>Email: <a href="mailto:k3@kimiafarma.co.id">k3@kimiafarma.co.id</a></li>
-        <li>Telepon: (021) 123-4567</li>
-        <li>Alamat: Jl. Veteran No. 9, Jakarta Pusat</li>
-      </ul>
+  <!-- Tim Pengembang -->
+<section id="team" class="bg-light py-5">
+  <div class="container text-center">
+    <h2 class="section-title">Tim Pengembang</h2>
+    <p>Kenali tim di balik pengembangan Sistem Informasi K3 PT Kimia Farma.</p>
+    <div class="row justify-content-center">
+      
+      <!-- Khuzaima Filla J -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card team-card w-auto h-auto border-0">
+          <img src='{{ asset("../dev/Filla.png") }}' class="card-img-top img-fluid" alt="Foto Khuzaima Filla">
+          <div class="slide-up-layer">
+            <!-- Foto duplikat seukuran, dengan opacity untuk efek overlay -->
+            <img src='{{ asset("../dev/filla-hover.png") }}' class="overlay-img" alt="Foto Overlay Khuzaima Filla">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Khuzaima Filla</h4>
+            <p class="card-text">UI Designer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deva Selvia Na -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card team-card w-auto h-auto border-0">
+          <img src='{{ asset("../dev/deva.png") }}' class="card-img-top img-fluid" alt="Foto Deva Selviana">
+          <div class="slide-up-layer">
+            <!-- Foto duplikat seukuran -->
+            <img src='{{ asset("../dev/deva-hover.png") }}' class="overlay-img" alt="Foto Overlay Deva Selviana"> 
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Deva Selviana</h4>
+            <p class="card-text">Frontend Developer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Drics -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card team-card w-auto h-auto border-0">
+          <img src='{{ asset("../dev/Audrics.png") }}' class="card-img-top img-fluid" alt="Foto Audric Andhika">
+          <div class="slide-up-layer">
+            <!-- Foto duplikat seukuran -->
+            <img src='{{ asset("../dev/audric-hover.png") }}' class="overlay-img" alt="Foto Overlay Audric Andhika">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Audric Andhika</h4>
+            <p class="card-text">System Analyst</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
+</section>  
 
   <!-- Footer -->
   <footer>
@@ -183,5 +347,17 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Hover effects for team cards
+    document.querySelectorAll('.team-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('hovered');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('hovered');
+      });
+    });
+  </script>
 </body>
 </html>
